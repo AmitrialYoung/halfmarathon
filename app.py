@@ -5,15 +5,13 @@ import joblib
 import pandas as pd
 from dotenv import load_dotenv
 from langfuse import observe
-from langfuse.openai import OpenAI # Klient OpenAI zintegrowany z Langfuse
+from langfuse.openai import OpenAI
 
-# Załadowanie zmiennych środowiskowych (Langfuse keys z panelu Digital Ocean)
 load_dotenv()
 
-# Funkcja ładująca model z plików, które wrzuciłeś na Git
+# Funkcja ładująca model z GitHub
 @st.cache_resource
 def load_model_locally():
-    # Ścieżka do modelu w Twoim repozytorium
     model_path = "model/new/best_marathon_model.pkl"
     # Wczytanie modelu za pomocą joblib
     model = joblib.load(model_path)
@@ -22,10 +20,9 @@ def load_model_locally():
 # Inicjalizacja modelu przy starcie aplikacji
 model = load_model_locally()
 
-# Konfiguracja strony Streamlit
 st.set_page_config(page_title="Predyktor biegu", layout="centered")
 
-# --- PANEL BOCZNY (Sidebar) ---
+# Sidebar do wprowadzania klucza API
 with st.sidebar:
     st.header("Konfiguracja")
     # Użytkownik wpisuje swój klucz, który nie jest zapisywany w zmiennych systemowych
@@ -73,7 +70,7 @@ def seconds_to_hms(seconds):
 # FUNKCJA EKSTRAKCJI: @observe() nie widzi klucza API, bo nie jest on argumentem funkcji
 @observe()
 def extract_runner_data(text_input, api_key_internal):
-    # Tworzymy klienta OpenAI wewnątrz funkcji
+    # Klient OpenAI wewnątrz funkcji
     client = OpenAI(api_key=api_key_internal)
     
     response = client.chat.completions.create(
@@ -86,7 +83,7 @@ def extract_runner_data(text_input, api_key_internal):
     )
 
     content = response.choices[0].message.content.strip()
-    # Wyłuskanie czystego JSON (zabezpieczenie przed ```json ... ```)
+    # Wyłuskanie czystego JSON
     start = content.find("{")
     end = content.rfind("}") + 1
     return json.loads(content[start:end])

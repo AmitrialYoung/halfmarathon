@@ -1,0 +1,38 @@
+name: half-marathon
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - python-dotenv
+  - pycaret=3.3.2 # Kompletny pakiet PyCaret do automatyzacji ML
+
+  # --- DIGITAL OCEAN / PRZECHOWYWANIE DANYCH (DigitalOcean Spaces to S3-compatible) ---
+  - boto3  # Klient AWS S3/Spaces
+  - s3fs   # System plików dla S3/Spaces, umożliwia integrację z Pandas/Dask
+
+  # --- ANALIZA DANYCH I UCZENIE MASZYNOWE (Notebook Pipeline) ---
+  - jupyter
+  - pandas
+  - scikit-learn
+  - numpy
+  - matplotlib
+  - seaborn
+  - joblib # Do zapisywania i ładowania wytrenowanego modelu
+
+  # --- APLIKACJA STREAMLIT ---
+  - streamlit
+
+  # --- LLM I MONITORING ---
+  - openai   # Do interakcji z modelem OpenAI
+
+  - pip:
+    - langfuse
+    # --- DODATKOWE NARZĘDZIA STREAMLIT (opcjonalnie, ale przydatne) ---
+    # - streamlit-pydantic # Jeśli zdecydujesz się na użycie Pydantic do walidacji danych wejściowych
+    # - streamlit-aggrid   # Do lepszej wizualizacji danych w Streamlit
+
+    # --- Opcjonalne do ML: Optymalizacja/Eksploracja ---
+    # - lightgbm
+    # - xgboost

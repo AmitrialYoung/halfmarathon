@@ -36,6 +36,7 @@ st.markdown("Wpisz swój wiek, płeć oraz czas na 5 km, a AI i model ML oblicz�
 
 # Pole do wpisywania danych tekstowych
 text = st.text_area("Opisz siebie (imię/płeć, wiek, czas na 5 km):", height=150, placeholder="Jestem mężczyzną, mam 34 lata. Mój ostatni czas na 5 km to 24:15.")
+st.markdown("*Model nie jest doskonały. Błąd w predykcji oscyluje w granicach 5 minut.*")
 
 # Instrukcje dla modelu LLM
 SYSTEM_PROMPT = "Jesteś silnikiem ekstrakcji danych. Zwracasz wyłącznie poprawny JSON."
